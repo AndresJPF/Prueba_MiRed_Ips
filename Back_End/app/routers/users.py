@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, Query
+from typing import List, Optional
+from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
@@ -10,7 +11,7 @@ from app.services import user_service
 router = APIRouter(prefix="/users", tags=["Usuarios"], dependencies=[Depends(get_current_user)])
 
 
-@router.get("/")
+@router.get("/", response_model=dict)  # Cambiar a dict
 def list_users(
     page: int = Query(1, ge=1, description="Número de página"),
     page_size: int = Query(10, ge=1, le=100, description="Cantidad de registros por página"),
@@ -18,8 +19,12 @@ def list_users(
 ):
     """Lista los usuarios de forma paginada."""
     usuarios, total = user_service.list_users(db, page, page_size)
+    
+    # Convertir usuarios a UserOut
+    usuarios_out = [UserOut.model_validate(u) for u in usuarios]
+    
     return {
-        "data": [UserOut.model_validate(u) for u in usuarios],
+        "data": usuarios_out,
         "total": total,
         "page": page,
         "page_size": page_size

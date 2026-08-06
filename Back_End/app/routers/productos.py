@@ -1,6 +1,5 @@
-from typing import List
-
-from fastapi import APIRouter, Depends, Query
+from typing import List, Optional
+from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
@@ -12,15 +11,17 @@ from app.services import producto_service
 router = APIRouter(prefix="/productos", tags=["Productos"], dependencies=[Depends(get_current_user)])
 
 
-@router.get("/", response_model=List[ProductoOut])
+@router.get("/", response_model=dict)  # Cambiar a dict para devolver objeto paginado
 def list_productos(
     page: int = Query(1, ge=1, description="Número de página"),
     page_size: int = Query(10, ge=1, le=100, description="Cantidad de registros por página"),
-    categoria_id: int | None = Query(None, description="Filtrar por categoría"),
-    estado: str | None = Query(None, description="Filtrar por estado"),
+    categoria_id: Optional[int] = Query(None, description="Filtrar por categoría"),
+    estado: Optional[str] = Query(None, description="Filtrar por estado"),
     db: Session = Depends(get_db),
 ):
-    """Lista los productos de forma paginada."""
+    """
+    Lista los productos de forma paginada.
+    """
     productos, total = producto_service.list_productos(
         db,
         page=page,
@@ -28,8 +29,12 @@ def list_productos(
         categoria_id=categoria_id,
         estado=estado,
     )
+    
+    # Convertir productos a ProductoOut
+    productos_out = [ProductoOut.model_validate(p) for p in productos]
+    
     return {
-        "data": [ProductoOut.model_validate(p) for p in productos],
+        "data": productos_out,
         "total": total,
         "page": page,
         "page_size": page_size,

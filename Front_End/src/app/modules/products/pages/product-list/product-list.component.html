@@ -1,0 +1,77 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Gestión de Productos</h1>
+    <a routerLink="/products/new" class="btn-primary">+ Nuevo Producto</a>
+  </div>
+
+  <div class="filters">
+    <div class="filter-group">
+      <label for="category">Categoría</label>
+      <select id="category" [(ngModel)]="filterCategory" (change)="applyFilters()">
+        <option [ngValue]="null">Todas</option>
+        <option *ngFor="let cat of categories" [ngValue]="cat.id">
+          {{ cat.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="estado">Estado</label>
+      <select id="estado" [(ngModel)]="filterEstado" (change)="applyFilters()">
+        <option [ngValue]="null">Todos</option>
+        <option value="activo">Activo</option>
+        <option value="inactivo">Inactivo</option>
+      </select>
+    </div>
+
+    <button class="btn-secondary" (click)="resetFilters()">Limpiar Filtros</button>
+  </div>
+
+  <div class="error-message" *ngIf="error">{{ error }}</div>
+
+  <div *ngIf="loading">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div *ngIf="!loading && products.length === 0">
+    <p class="empty-message">No hay productos registrados</p>
+  </div>
+
+  <div class="table-container" *ngIf="!loading && products.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.codigo }}</td>
+          <td>{{ product.nombre }}</td>
+          <td>{{ getCategoryName(product.categoria_id) }}</td>
+          <td>${{ product.precio | number:'1.2-2' }}</td>
+          <td>{{ product.stock }}</td>
+          <td><span [class]="'badge badge-' + product.estado">{{ product.estado }}</span></td>
+          <td class="actions">
+            <a [routerLink]="['/products', product.id]" class="btn-view">Ver</a>
+            <a [routerLink]="['/products/edit', product.id]" class="btn-edit">Editar</a>
+            <button (click)="deleteProduct(product.id)" class="btn-delete">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-pagination
+    [currentPage]="currentPage"
+    [total]="total"
+    [pageSize]="pageSize"
+    (pageChange)="onPageChange($event)"
+  ></app-pagination>
+</div>

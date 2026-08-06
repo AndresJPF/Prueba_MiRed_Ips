@@ -1,0 +1,47 @@
+<div class="detail-container">
+  <div class="detail-card">
+    <div class="detail-header">
+      <h2>Detalle de Usuario</h2>
+      <div class="actions">
+        <a [routerLink]="['/users/edit', user?.id]" class="btn-edit">Editar</a>
+        <button (click)="deleteUser()" class="btn-delete">Eliminar</button>
+        <a routerLink="/users" class="btn-secondary">Volver</a>
+      </div>
+    </div>
+
+    <div class="error-message" *ngIf="error">{{ error }}</div>
+
+    <div *ngIf="loading">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+
+    <div *ngIf="!loading && user">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>ID</label>
+          <p>{{ user.id }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Nombre</label>
+          <p>{{ user.name }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Email</label>
+          <p>{{ user.email }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Rol</label>
+          <p><span [class]="'badge badge-' + user.role">{{ user.role }}</span></p>
+        </div>
+        <div class="detail-item">
+          <label>Fecha de Registro</label>
+          <p>{{ user.created_at | date:'dd/MM/yyyy HH:mm' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!loading && !user && !error">
+      <p class="empty-message">Usuario no encontrado</p>
+    </div>
+  </div>
+</div>

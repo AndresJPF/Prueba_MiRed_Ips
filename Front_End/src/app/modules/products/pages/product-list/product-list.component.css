@@ -1,0 +1,182 @@
+.page-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  color: #2c3e50;
+  margin: 0;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.filter-group label {
+  font-weight: 500;
+  color: #2c3e50;
+  font-size: 0.875rem;
+}
+
+.filter-group select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-width: 150px;
+}
+
+.btn-secondary {
+  padding: 0.5rem 1rem;
+  background: #95a5a6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+  background: #7f8c8d;
+}
+
+.error-message {
+  background: #fde8e8;
+  color: #e74c3c;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.empty-message {
+  text-align: center;
+  color: #666;
+  padding: 3rem;
+}
+
+.table-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #f8f9fa;
+}
+
+th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #2c3e50;
+  border-bottom: 2px solid #dee2e6;
+}
+
+td {
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+tr:hover {
+  background: #f8f9fa;
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-activo {
+  background: #27ae60;
+  color: white;
+}
+
+.badge-inactivo {
+  background: #e74c3c;
+  color: white;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actions a,
+.actions button {
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s;
+}
+
+.btn-view {
+  background: #2ecc71;
+  color: white;
+}
+
+.btn-view:hover {
+  background: #27ae60;
+}
+
+.btn-edit {
+  background: #f39c12;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #e67e22;
+}
+
+.btn-delete {
+  background: #e74c3c;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #c0392b;
+}
